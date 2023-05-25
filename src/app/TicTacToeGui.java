@@ -9,12 +9,13 @@ public class TicTacToeGui implements ActionListener {
     private final JFrame frame;
     private final JButton[] buttons = new JButton[9];
     private final JLabel textField;
-    private final Font font = new Font("Ink Free", Font.BOLD, 75);
+    private final Font font = new Font("Ink Free", Font.BOLD, 50);
 
     public TicTacToeGui() {
         frame = new JFrame("TicTacToe");
         frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        centreFrame(frame);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(3, 3));
@@ -23,6 +24,7 @@ public class TicTacToeGui implements ActionListener {
             buttons[i] = new JButton();
             buttons[i].setFocusable(false);
             buttons[i].addActionListener(this);
+            buttons[i].setFont(font);
             buttonPanel.add(buttons[i]);
         }
 
@@ -41,9 +43,20 @@ public class TicTacToeGui implements ActionListener {
 
         frame.add(titlePanel, BorderLayout.NORTH);
         frame.add(buttonPanel, BorderLayout.CENTER);
-        frame.pack();
         frame.setResizable(false);
         frame.setVisible(true);
+    }
+
+    private void centreFrame(JFrame frame) {
+        int width = Toolkit.getDefaultToolkit().getScreenSize().width;
+        int height = Toolkit.getDefaultToolkit().getScreenSize().height;
+
+        frame.setSize(width / 4, height / 2);
+
+        int widthFrame = frame.getSize().width;
+        int heightFrame = frame.getSize().height;
+
+        frame.setLocation(widthFrame, heightFrame / 2);
     }
 
 
