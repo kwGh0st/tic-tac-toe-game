@@ -9,8 +9,8 @@ public class TicTacToeGui implements ActionListener {
     private final JFrame frame;
     private final JButton[] buttons = new JButton[9];
     private final JLabel textField;
-    private final Font font = new Font("Ink Free", Font.BOLD, 50);
     private boolean playerOneTurn;
+    private boolean isWinner;
 
     public TicTacToeGui() {
         frame = new JFrame("TicTacToe");
@@ -21,6 +21,7 @@ public class TicTacToeGui implements ActionListener {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(3, 3));
 
+        Font font = new Font("Ink Free", Font.BOLD, 50);
         for (int i = 0; i < buttons.length; i++) {
             buttons[i] = new JButton();
             buttons[i].setFocusable(false);
@@ -58,6 +59,26 @@ public class TicTacToeGui implements ActionListener {
         int heightFrame = frame.getSize().height;
 
         frame.setLocation(widthFrame, heightFrame / 2);
+    }
+
+    private void playerOneWin(int a, int b, int c) {
+        for (int i = 0; i < buttons.length; i++) {
+            if (i == a || i == b || i == c) {
+                buttons[i].setBackground(Color.GREEN);
+                textField.setText("X wins!!!");
+                isWinner = true;
+            }
+        }
+    }
+
+    private void playerTwoWin(int a, int b, int c) {
+        for (int i = 0; i < buttons.length; i++) {
+            if (i == a || i == b || i == c) {
+                buttons[i].setBackground(Color.GREEN);
+                textField.setText("O wins!!!");
+                isWinner = true;
+            }
+        }
     }
 
 
