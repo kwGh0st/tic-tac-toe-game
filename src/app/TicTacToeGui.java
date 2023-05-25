@@ -10,6 +10,7 @@ public class TicTacToeGui implements ActionListener {
     private final JButton[] buttons = new JButton[9];
     private final JLabel textField;
     private final Font font = new Font("Ink Free", Font.BOLD, 50);
+    private boolean playerOneTurn;
 
     public TicTacToeGui() {
         frame = new JFrame("TicTacToe");
@@ -63,6 +64,17 @@ public class TicTacToeGui implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        for (int i = 0; i < buttons.length; i++ ) {
+            if (e.getSource() == buttons[i]) {
+                if (playerOneTurn) {
+                    buttons[i].setText("X");
+                    playerOneTurn = false;
+                } else {
+                    buttons[i].setText("O");
+                    playerOneTurn = true;
+                }
+                buttons[i].setEnabled(false);
+            }
+        }
     }
 }
