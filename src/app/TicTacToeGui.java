@@ -79,7 +79,8 @@ public class TicTacToeGui implements ActionListener {
     }
 
     private void setPlayer(JLabel textField) {
-
+        if (playerOneTurn) textField.setText("X turn");
+        else textField.setText("O turn");
     }
 
     private void checkPositions(StringBuilder playerPositions) {
