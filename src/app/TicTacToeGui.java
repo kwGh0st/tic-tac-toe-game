@@ -16,13 +16,14 @@ public class TicTacToeGui implements ActionListener {
     private boolean isGameStarted = false;
     private final StringBuilder playerOnePositions = new StringBuilder();
     private final StringBuilder playerTwoPositions = new StringBuilder();
-    private final HashSet<String> winCombination = new HashSet<>();
 
     protected TicTacToeGui() {
         frame = new JFrame("TicTacToe");
         frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         centreFrame(frame);
+        HashSet<String> winCombinations = new HashSet<>();
+        setWinningCombinations(winCombinations);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(3, 3));
@@ -67,6 +68,16 @@ public class TicTacToeGui implements ActionListener {
         frame.setLocation(widthFrame, heightFrame / 2);
     }
 
+    private void setWinningCombinations(HashSet<String> combinations) {
+        combinations.add("012");
+        combinations.add("345");
+        combinations.add("678");
+        combinations.add("036");
+        combinations.add("147");
+        combinations.add("258");
+        combinations.add("048");
+        combinations.add("246");
+    }
     private void startGame(JButton[] gameButtons, JLabel gameLabel) {
         setFirstTurn(gameButtons, gameLabel);
     }
@@ -89,8 +100,6 @@ public class TicTacToeGui implements ActionListener {
         isGameStarted = true;
         enableAll(gameButtons);
         play(gameButtons, gameLabel);
-
-
     }
 
     private void setPlayer(JLabel textField) {
@@ -99,7 +108,6 @@ public class TicTacToeGui implements ActionListener {
     }
 
     private void play(JButton[] gameButtons, JLabel gameLabel) {
-
     }
 
     private void checkPositions(StringBuilder playerPositions) {
