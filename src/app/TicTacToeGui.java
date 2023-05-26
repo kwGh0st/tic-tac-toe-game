@@ -5,11 +5,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
+import java.util.Random;
 
 public class TicTacToeGui implements ActionListener {
     private final JFrame frame;
     private final JButton[] gameButtons = new JButton[9];
-    private final JLabel textField;
+    private final JLabel gameLabel;
     private boolean playerOneTurn;
     private boolean isWinner = false;
     private boolean isGameStarted = false;
@@ -39,14 +40,14 @@ public class TicTacToeGui implements ActionListener {
         titlePanel.setLayout(new BorderLayout());
         titlePanel.setBounds(0, 0, 800, 100);
 
-        textField = new JLabel();
-        textField.setFocusable(false);
-        textField.setHorizontalAlignment(JLabel.CENTER);
-        textField.setText("Tic-Tac-Toe");
-        textField.setOpaque(true);
-        textField.setFont(font);
+        gameLabel = new JLabel();
+        gameLabel.setFocusable(false);
+        gameLabel.setHorizontalAlignment(JLabel.CENTER);
+        gameLabel.setText("Tic-Tac-Toe");
+        gameLabel.setOpaque(true);
+        gameLabel.setFont(font);
 
-        titlePanel.add(textField, BorderLayout.NORTH);
+        titlePanel.add(gameLabel, BorderLayout.NORTH);
 
         frame.add(titlePanel, BorderLayout.NORTH);
         frame.add(buttonPanel, BorderLayout.CENTER);
@@ -66,21 +67,39 @@ public class TicTacToeGui implements ActionListener {
         frame.setLocation(widthFrame, heightFrame / 2);
     }
 
-    private void startGame() {
-
+    private void startGame(JButton[] gameButtons, JLabel gameLabel) {
+        setFirstTurn(gameButtons, gameLabel);
     }
 
-    private void firstTurn() {
+    private void setFirstTurn(JButton[] gameButtons, JLabel gameLabel) {
+        isGameStarted = false;
+        disableAll(gameButtons);
 
-    }
+        int gamble = new Random().nextInt(10);
+        playerOneTurn = gamble < 5;
 
-    private void play() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+            System.out.println("Sleeping interrupted!");
+        }
+
+        setPlayer(gameLabel);
+        isGameStarted = true;
+        enableAll(gameButtons);
+        play(gameButtons, gameLabel);
+
 
     }
 
     private void setPlayer(JLabel textField) {
         if (playerOneTurn) textField.setText("X turn");
         else textField.setText("O turn");
+    }
+
+    private void play(JButton[] gameButtons, JLabel gameLabel) {
+
     }
 
     private void checkPositions(StringBuilder playerPositions) {
@@ -109,7 +128,7 @@ public class TicTacToeGui implements ActionListener {
         for (int i = 0; i < gameButtons.length; i++) {
             if (i == a || i == b || i == c) {
                 gameButtons[i].setBackground(Color.GREEN);
-                textField.setText("X wins!!!");
+                gameLabel.setText("X wins!!!");
                 isWinner = true;
             }
         }
@@ -119,7 +138,7 @@ public class TicTacToeGui implements ActionListener {
         for (int i = 0; i < gameButtons.length; i++) {
             if (i == a || i == b || i == c) {
                 gameButtons[i].setBackground(Color.GREEN);
-                textField.setText("O wins!!!");
+                gameLabel.setText("O wins!!!");
                 isWinner = true;
             }
         }
