@@ -11,12 +11,12 @@ public class TicTacToeGui implements ActionListener {
     private final JFrame frame;
     private final JButton[] gameButtons = new JButton[9];
     private final JLabel gameLabel;
-    private boolean playerOneTurn;
-    private boolean isWinner = false;
-    private boolean isGameStarted = false;
     private final StringBuilder playerOnePositions = new StringBuilder();
     private final StringBuilder playerTwoPositions = new StringBuilder();
     private final HashSet<String> winCombinations = new HashSet<>();
+    private boolean playerOneTurn;
+    private boolean isWinner = false;
+    private boolean isGameStarted = false;
 
     protected TicTacToeGui() {
         frame = new JFrame("TicTacToe");
@@ -208,7 +208,7 @@ public class TicTacToeGui implements ActionListener {
     private void playerTwoWin(int a, int b, int c, JButton[] gameButtons, JLabel gameLabel) {
         for (int i = 0; i < gameButtons.length; i++) {
             if (i == a || i == b || i == c) {
-                gameButtons[i].setBackground(Color.GREEN);
+                gameButtons[i].setBackground(Color.RED);
                 gameLabel.setText("O wins!!!");
                 isGameStarted = false;
                 isWinner = true;
