@@ -4,15 +4,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
 
 public class TicTacToeGui implements ActionListener {
     private final JFrame frame;
     private final JButton[] buttons = new JButton[9];
     private final JLabel textField;
     private boolean playerOneTurn;
-    private boolean isWinner;
+    private boolean isWinner = false;
+    private boolean isGameStarted = false;
+    private final StringBuilder playerOnePositions = new StringBuilder();
+    private final StringBuilder playerTwoPositions = new StringBuilder();
+    private final HashSet<String> winCombination = new HashSet<>();
 
-    public TicTacToeGui() {
+    protected TicTacToeGui() {
         frame = new JFrame("TicTacToe");
         frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -60,6 +65,8 @@ public class TicTacToeGui implements ActionListener {
 
         frame.setLocation(widthFrame, heightFrame / 2);
     }
+
+
 
     private void playerOneWin(int a, int b, int c) {
         for (int i = 0; i < buttons.length; i++) {
