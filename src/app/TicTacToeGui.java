@@ -66,6 +66,38 @@ public class TicTacToeGui implements ActionListener {
         frame.setLocation(widthFrame, heightFrame / 2);
     }
 
+    private void startGame() {
+
+    }
+
+    private void firstTurn() {
+
+    }
+
+    private void play() {
+
+    }
+
+    private void setPlayer(JLabel textField) {
+
+    }
+
+    private void checkPositions(StringBuilder playerPositions) {
+
+    }
+
+    private void areEmptyPositionsRemaining(JButton[] game) {
+
+    }
+
+    private void disableAll(JButton[] buttons) {
+
+    }
+
+    private void enableAll(JButton[] buttons) {
+
+    }
+
 
 
     private void playerOneWin(int a, int b, int c) {
