@@ -8,7 +8,7 @@ import java.util.HashSet;
 
 public class TicTacToeGui implements ActionListener {
     private final JFrame frame;
-    private final JButton[] buttons = new JButton[9];
+    private final JButton[] gameButtons = new JButton[9];
     private final JLabel textField;
     private boolean playerOneTurn;
     private boolean isWinner = false;
@@ -27,12 +27,12 @@ public class TicTacToeGui implements ActionListener {
         buttonPanel.setLayout(new GridLayout(3, 3));
 
         Font font = new Font("Ink Free", Font.BOLD, 50);
-        for (int i = 0; i < buttons.length; i++) {
-            buttons[i] = new JButton();
-            buttons[i].setFocusable(false);
-            buttons[i].addActionListener(this);
-            buttons[i].setFont(font);
-            buttonPanel.add(buttons[i]);
+        for (int i = 0; i < gameButtons.length; i++) {
+            gameButtons[i] = new JButton();
+            gameButtons[i].setFocusable(false);
+            gameButtons[i].addActionListener(this);
+            gameButtons[i].setFont(font);
+            buttonPanel.add(gameButtons[i]);
         }
 
         JPanel titlePanel = new JPanel();
@@ -91,19 +91,23 @@ public class TicTacToeGui implements ActionListener {
     }
 
     private void disableAll(JButton[] buttons) {
-
+        for (JButton button : buttons) {
+            button.setEnabled(false);
+        }
     }
 
     private void enableAll(JButton[] buttons) {
-
+        for (JButton button : buttons) {
+            button.setEnabled(true);
+        }
     }
 
 
 
     private void playerOneWin(int a, int b, int c) {
-        for (int i = 0; i < buttons.length; i++) {
+        for (int i = 0; i < gameButtons.length; i++) {
             if (i == a || i == b || i == c) {
-                buttons[i].setBackground(Color.GREEN);
+                gameButtons[i].setBackground(Color.GREEN);
                 textField.setText("X wins!!!");
                 isWinner = true;
             }
@@ -111,9 +115,9 @@ public class TicTacToeGui implements ActionListener {
     }
 
     private void playerTwoWin(int a, int b, int c) {
-        for (int i = 0; i < buttons.length; i++) {
+        for (int i = 0; i < gameButtons.length; i++) {
             if (i == a || i == b || i == c) {
-                buttons[i].setBackground(Color.GREEN);
+                gameButtons[i].setBackground(Color.GREEN);
                 textField.setText("O wins!!!");
                 isWinner = true;
             }
@@ -124,16 +128,16 @@ public class TicTacToeGui implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        for (int i = 0; i < buttons.length; i++ ) {
-            if (e.getSource() == buttons[i]) {
+        for (int i = 0; i < gameButtons.length; i++ ) {
+            if (e.getSource() == gameButtons[i]) {
                 if (playerOneTurn) {
-                    buttons[i].setText("X");
+                    gameButtons[i].setText("X");
                     playerOneTurn = false;
                 } else {
-                    buttons[i].setText("O");
+                    gameButtons[i].setText("O");
                     playerOneTurn = true;
                 }
-                buttons[i].setEnabled(false);
+                gameButtons[i].setEnabled(false);
             }
         }
     }
