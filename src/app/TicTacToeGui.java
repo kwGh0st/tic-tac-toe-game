@@ -16,13 +16,13 @@ public class TicTacToeGui implements ActionListener {
     private boolean isGameStarted = false;
     private final StringBuilder playerOnePositions = new StringBuilder();
     private final StringBuilder playerTwoPositions = new StringBuilder();
+    private final HashSet<String> winCombinations = new HashSet<>();
 
     protected TicTacToeGui() {
         frame = new JFrame("TicTacToe");
         frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         centreFrame(frame);
-        HashSet<String> winCombinations = new HashSet<>();
         setWinningCombinations(winCombinations);
 
         JPanel buttonPanel = new JPanel();
@@ -54,6 +54,7 @@ public class TicTacToeGui implements ActionListener {
         frame.add(buttonPanel, BorderLayout.CENTER);
         frame.setResizable(false);
         frame.setVisible(true);
+        startGame(gameButtons, gameLabel);
     }
 
     private void centreFrame(JFrame frame) {
@@ -108,14 +109,75 @@ public class TicTacToeGui implements ActionListener {
     }
 
     private void play(JButton[] gameButtons, JLabel gameLabel) {
+        while (isGameStarted) {
+            setPlayer(gameLabel);
+            if (playerOnePositions.length() >= 3 || playerTwoPositions.length() >= 3) {
+                checkPositions();
+            }
+            areEmptyPositionsRemaining(gameButtons, gameLabel);
+        }
+        disableAll(gameButtons);
     }
 
-    private void checkPositions(StringBuilder playerPositions) {
+    private void checkPositions() {
+        char[] p1 = playerOnePositions.toString().toCharArray();
+        char[] p2 = playerTwoPositions.toString().toCharArray();
 
+        StringBuilder p1Builder = new StringBuilder();
+        StringBuilder p2Builder = new StringBuilder();
+
+        for (String each : winCombinations) {
+            int count = 0;
+            for (char c : p1) {
+                if (each.contains(String.valueOf(c))) {
+                    count++;
+                    p1Builder.append(c);
+                }
+            }
+
+            if (count == 3) {
+                playerOneWin(
+                        Integer.parseInt(p1Builder.substring(0, 1)),
+                        Integer.parseInt(p1Builder.substring(1, 2)),
+                        Integer.parseInt(p1Builder.substring(2)),
+                        gameButtons,
+                        gameLabel);
+                return;
+            }
+
+            p1Builder = new StringBuilder();
+            count = 0;
+
+            for (char c : p2) {
+                if (each.contains(String.valueOf(c))) {
+                    count++;
+                    p2Builder.append(c);
+                }
+            }
+
+            if (count == 3) {
+                playerTwoWin(
+                        Integer.parseInt(p2Builder.substring(0, 1)),
+                        Integer.parseInt(p2Builder.substring(1, 2)),
+                        Integer.parseInt(p2Builder.substring(2)),
+                        gameButtons,
+                        gameLabel);
+                return;
+            }
+
+            p2Builder = new StringBuilder();
+        }
     }
 
-    private void areEmptyPositionsRemaining(JButton[] game) {
+    private void areEmptyPositionsRemaining(JButton[] gameField, JLabel gameLabel) {
+        for (JButton button : gameField) {
+            if (button.isEnabled()) return;
+        }
 
+        if (!isWinner) {
+            gameLabel.setText("Draw!");
+            isGameStarted = false;
+        }
     }
 
     private void disableAll(JButton[] buttons) {
@@ -132,21 +194,23 @@ public class TicTacToeGui implements ActionListener {
 
 
 
-    private void playerOneWin(int a, int b, int c) {
+    private void playerOneWin(int a, int b, int c, JButton[] gameButtons, JLabel gameLabel) {
         for (int i = 0; i < gameButtons.length; i++) {
             if (i == a || i == b || i == c) {
                 gameButtons[i].setBackground(Color.GREEN);
                 gameLabel.setText("X wins!!!");
+                isGameStarted = false;
                 isWinner = true;
             }
         }
     }
 
-    private void playerTwoWin(int a, int b, int c) {
+    private void playerTwoWin(int a, int b, int c, JButton[] gameButtons, JLabel gameLabel) {
         for (int i = 0; i < gameButtons.length; i++) {
             if (i == a || i == b || i == c) {
                 gameButtons[i].setBackground(Color.GREEN);
                 gameLabel.setText("O wins!!!");
+                isGameStarted = false;
                 isWinner = true;
             }
         }
@@ -160,9 +224,11 @@ public class TicTacToeGui implements ActionListener {
             if (e.getSource() == gameButtons[i]) {
                 if (playerOneTurn) {
                     gameButtons[i].setText("X");
+                    playerOnePositions.append(i);
                     playerOneTurn = false;
                 } else {
                     gameButtons[i].setText("O");
+                    playerTwoPositions.append(i);
                     playerOneTurn = true;
                 }
                 gameButtons[i].setEnabled(false);
