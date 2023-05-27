@@ -117,6 +117,26 @@ public class TicTacToeGui implements ActionListener {
             areEmptyPositionsRemaining(gameButtons, gameLabel);
         }
         disableAll(gameButtons);
+        restartGame();
+    }
+
+    private void restartGame() {
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+
+        int result = JOptionPane.showConfirmDialog(frame, "Do you want to restart the game?", "",
+                JOptionPane.YES_NO_OPTION);
+
+
+        if (result == JOptionPane.YES_OPTION) {
+            frame.dispose();
+            new TicTacToeGui();
+        } else if (result == JOptionPane.NO_OPTION) {
+            frame.dispose();
+        }
     }
 
     private void checkPositions() {
@@ -215,8 +235,6 @@ public class TicTacToeGui implements ActionListener {
             }
         }
     }
-
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
